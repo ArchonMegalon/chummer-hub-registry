@@ -1,0 +1,14 @@
+group_id: chummer-vnext
+contract_sets:
+- session_events_vnext
+- runtime_dtos_vnext
+- explain_trace_vnext
+- asset_review_vnext
+published_from_auditor:
+- candidate_id: 8696
+  finding_key: group.hub_registry_repo_split_recommended
+  title: Bootstrap chummer-hub-registry
+  detail: Create a dedicated registry repo for artifact catalog, publication, moderation,
+    installs, and runtime-bundle head ownership once the contract-plane preconditions
+    are stable.
+  published_at: '2026-03-09T15:53:55Z'

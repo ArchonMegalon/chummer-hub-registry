@@ -1,0 +1,46 @@
+groups:
+  chummer-vnext:
+    milestone_coverage_complete: false
+    design_coverage_complete: false
+    uncovered_scope:
+    - Group-level milestone coverage is incomplete for contract reset and program
+      backlog truth.
+    - Shared lockstep blockers are not yet first-class runtime data in fleet.
+    - The mobile play split is new and still needs package-only dependency enforcement
+      plus play API contract canon.
+    - 'The play extraction is still incomplete: Presentation still owns session/mobile
+      surfaces while `chummer-play` is scaffold-stage.'
+    - The next clean split, `chummer-ui-kit`, is not yet materialized as a package-only
+      shared UI boundary.
+    - Registry/publication and media generation seams are strong enough for future
+      repo splits but are not yet isolated as their own package or repo boundaries.
+    remaining_milestones:
+    - id: P0
+      title: Contract Reset / Milestone 0 blockers
+      status: open
+    - id: P1
+      title: Lockstep session shell readiness
+      status: open
+    - id: P2
+      title: Explain / provenance contract alignment
+      status: open
+    - id: P3
+      title: Asset review / generated artifact alignment
+      status: open
+    - id: P4
+      title: Product backlog truthfulness
+      status: open
+    - id: P5
+      title: UI kit package split for shared design-system ownership
+      status: open
+    - id: P6
+      title: Hub registry and media seams isolated behind package-real boundaries
+      status: open
+    auditor_publication:
+      candidate_id: 35
+      finding_key: group.milestone_coverage_incomplete
+      title: Complete group milestone registry
+      detail: Finish group milestone mapping for chummer-vnext and tie tasks to group
+        phases.
+      severity: medium
+      published_at: '2026-03-09T12:56:33Z'
