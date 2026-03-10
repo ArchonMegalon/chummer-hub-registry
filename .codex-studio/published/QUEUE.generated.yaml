@@ -1,0 +1,3 @@
+mode: append
+items:
+- Sync the approved Chummer design bundle into `hub-registry` under `.codex-design/` and refresh repo-local review context.
