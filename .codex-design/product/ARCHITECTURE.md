@@ -4,6 +4,7 @@
 - Central design lives here.
 - Repo-local mirrors are synced into code repos for workers and GitHub review.
 - Cross-repo DTO ownership must be explicit and package-based.
+- Accepted split ADRs are tracked in [adrs/README.md](/docker/chummercomplete/chummer-design/products/chummer/adrs/README.md).
 
 ## Front door workflow
 1. Cross-repo design changes land in `chummer-design` first.
