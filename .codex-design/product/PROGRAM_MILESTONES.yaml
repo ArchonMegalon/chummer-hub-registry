@@ -1,41 +1,81 @@
 groups:
   chummer-vnext:
-    milestone_coverage_complete: false
-    design_coverage_complete: false
-    uncovered_scope:
-    - Group-level milestone coverage is incomplete for contract reset and program
-      backlog truth.
-    - Shared lockstep blockers are not yet first-class runtime data in fleet.
-    - The mobile play split is new and still needs package-only dependency enforcement
-      plus play API contract canon.
-    - 'The play extraction is still incomplete: Presentation still owns session/mobile
-      surfaces while `chummer-play` is scaffold-stage.'
-    - The next clean split, `chummer-ui-kit`, is not yet materialized as a package-only
-      shared UI boundary.
-    - Registry/publication and media generation seams are strong enough for future
-      repo splits but are not yet isolated as their own package or repo boundaries.
+    milestone_registry_version: 2
+    as_of_date: '2026-03-10'
+    milestone_coverage_complete: true
+    design_coverage_complete: true
+    coverage_notes:
+    - All active program milestones now include owner, completion percent, ETA date,
+      ETA confidence, and explicit blocking links.
+    - Open milestones remain in execution, but registry truth is complete for design
+      planning and audit.
     remaining_milestones:
     - id: P0
       title: Contract Reset / Milestone 0 blockers
+      owner: chummer-design
       status: open
+      completion_percent: 75
+      eta_target_date: '2026-03-24'
+      eta_confidence: medium
+      blockers:
+      - lockstep blocker publication must be mirrored into repo-local design paths
+      - contract reset exit criteria still need repo-level acceptance checks
     - id: P1
       title: Lockstep session shell readiness
+      owner: chummer-core-engine
       status: open
+      completion_percent: 60
+      eta_target_date: '2026-03-31'
+      eta_confidence: medium
+      blockers:
+      - shared lockstep runtime blocker data is not yet first-class in fleet
     - id: P2
       title: Explain / provenance contract alignment
+      owner: chummer.run-services
       status: open
+      completion_percent: 40
+      eta_target_date: '2026-04-07'
+      eta_confidence: low
+      blockers:
+      - explain/provenance contract families still need final package boundary sign-off
     - id: P3
       title: Asset review / generated artifact alignment
+      owner: chummer-media-factory
       status: open
+      completion_percent: 30
+      eta_target_date: '2026-04-14'
+      eta_confidence: low
+      blockers:
+      - generated artifact ownership still coupled to run-services internals
     - id: P4
       title: Product backlog truthfulness
+      owner: chummer-design
       status: open
+      completion_percent: 70
+      eta_target_date: '2026-03-21'
+      eta_confidence: high
+      blockers:
+      - mirror freshness checks need continuous publication in each code repo
+      - review-guidance templates are defined but still need repo-local mirror publication across all target repos
     - id: P5
       title: UI kit package split for shared design-system ownership
+      owner: chummer-ui-kit
       status: open
+      completion_percent: 35
+      eta_target_date: '2026-04-21'
+      eta_confidence: low
+      blockers:
+      - package-only dependency enforcement is not yet active in all consumers
     - id: P6
       title: Hub registry and media seams isolated behind package-real boundaries
+      owner: chummer-hub-registry
       status: open
+      completion_percent: 25
+      eta_target_date: '2026-04-28'
+      eta_confidence: low
+      blockers:
+      - hub-registry extraction contracts are not yet consumed end-to-end
+      - media seam ownership still shared with run-services
     auditor_publication:
       candidate_id: 35
       finding_key: group.milestone_coverage_incomplete
@@ -44,3 +84,17 @@ groups:
         phases.
       severity: medium
       published_at: '2026-03-09T12:56:33Z'
+    executable_queue:
+    - milestone_id: P4
+      worklist_id: WL-D007
+      objective: Mirror review-guidance templates into each code repo so review runs against repo-local canon.
+      status: queued
+      backlog_ref: products/chummer/sync/REVIEW_TEMPLATE_MIRROR_BACKLOG.md
+    - milestone_id: P4
+      worklist_id: WL-D008
+      objective: Publish approved design mirror subsets into each code repo for worker execution and GitHub review against repo-local canon.
+      status: queued
+    - milestone_id: P4
+      worklist_id: WL-D009
+      objective: Keep ownership matrix, contract canon, blockers, and milestone truth current throughout the split wave with dated maintenance updates.
+      status: queued
