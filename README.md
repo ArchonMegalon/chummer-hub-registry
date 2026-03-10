@@ -21,6 +21,12 @@ This boundary explicitly excludes:
 - `Chummer.Hub.Registry.Contracts`: shared immutable records and stable vocabulary.
 - `Chummer.Hub.Registry.Contracts.Verify`: no-network verification harness that asserts the extracted surface compiles and preserves key shape guarantees.
 
+## Downstream Consumption
+
+`chummer.run-services` and presentation are expected to consume registry DTOs through the `Chummer.Hub.Registry.Contracts` package boundary rather than through source-level registry ownership.
+
+The consumer migration map for that split is tracked in [docs/downstream-consumers.v1.md](/docker/chummercomplete/chummer-hub-registry/docs/downstream-consumers.v1.md).
+
 ## Verification
 
 Run `scripts/ai/verify.sh`.
