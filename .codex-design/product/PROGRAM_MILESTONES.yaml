@@ -86,6 +86,10 @@ groups:
       published_at: '2026-03-09T12:56:33Z'
     executable_queue:
     - milestone_id: P4
+      worklist_id: WL-D006
+      objective: Finish milestone coverage modeling so ETA and completion truth are no longer partial.
+      status: done
+    - milestone_id: P4
       worklist_id: WL-D007
       objective: Mirror review-guidance templates into each code repo so review runs against repo-local canon.
       status: queued
@@ -94,7 +98,9 @@ groups:
       worklist_id: WL-D008
       objective: Publish approved design mirror subsets into each code repo for worker execution and GitHub review against repo-local canon.
       status: queued
+      backlog_ref: products/chummer/sync/LOCAL_MIRROR_PUBLISH_BACKLOG.md
     - milestone_id: P4
       worklist_id: WL-D009
       objective: Keep ownership matrix, contract canon, blockers, and milestone truth current throughout the split wave with dated maintenance updates.
       status: queued
+      backlog_ref: products/chummer/sync/TRUTH_MAINTENANCE_BACKLOG.md
