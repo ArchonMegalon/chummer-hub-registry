@@ -14,3 +14,7 @@
   - persistence adapters
   - HTTP endpoints
   - cross-repo package publication automation
+  - AI gateway routing
+  - Spider session routing
+  - session relay orchestration
+  - media rendering pipeline

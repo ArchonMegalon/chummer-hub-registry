@@ -9,6 +9,13 @@ This repo currently seeds `Chummer.Hub.Registry.Contracts`, a dependency-light .
 - install state, install-history records, and compatibility projections
 - runtime-bundle issuance and head projections
 
+This boundary explicitly excludes:
+
+- AI gateway routing logic
+- Spider routing orchestration
+- session relay logic
+- media rendering or generation services
+
 ## Projects
 
 - `Chummer.Hub.Registry.Contracts`: shared immutable records and stable vocabulary.
