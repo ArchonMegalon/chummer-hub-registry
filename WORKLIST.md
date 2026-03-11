@@ -12,3 +12,4 @@
 - [done] Add milestone mapping for moderation/publication projections that still need explicit registry-owned read models
 - [done] Publish runnable backlog for moderation/publication projection read-model ownership and verify-gate expansion
 - [done] Create metadata/publication ownership inventory that lists every remaining `run-services` implementation owner for immutable artifact metadata and publication state
+- [done] Publish a cutover checklist that moves metadata/publication write ownership and persistence authority to `chummer-hub-registry` while keeping `run-services` as contract consumer only
