@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using Chummer.Hub.Registry.Contracts;
 
 VerifySealedRecord(typeof(ArtifactInstallState));
@@ -115,6 +116,8 @@ HubPublicationResult<RuntimeBundleHeadProjection> notImplemented = HubPublicatio
     new HubPublicationNotImplementedReceipt("not-implemented", HubPublicationOperations.ListModerationQueue, "queued"));
 Assert(!notImplemented.IsImplemented, "Fallback result wrappers must report not implemented.");
 
+VerifyMetadataPublicationContractsAreNotSourceOwnedInRunServices();
+
 Console.WriteLine("Registry contract verification passed.");
 
 static void VerifySealedRecord(Type type)
@@ -135,4 +138,85 @@ static void Assert(bool condition, string message)
     {
         throw new InvalidOperationException(message);
     }
+}
+
+static void VerifyMetadataPublicationContractsAreNotSourceOwnedInRunServices()
+{
+    string? runServicesRoot = ResolveRunServicesRoot();
+    if (runServicesRoot is null)
+    {
+        Console.WriteLine("Registry ownership gate skipped: run-services repo was not found in this workspace.");
+        return;
+    }
+
+    string[] sourceFiles = Directory.GetFiles(runServicesRoot, "*.cs", SearchOption.AllDirectories)
+        .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
+        .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
+        .ToArray();
+
+    Regex declarationRegex = BuildDeclarationRegex();
+    List<string> violations = [];
+    foreach (string sourceFile in sourceFiles)
+    {
+        string source = File.ReadAllText(sourceFile);
+        MatchCollection matches = declarationRegex.Matches(source);
+        if (matches.Count == 0)
+        {
+            continue;
+        }
+
+        string relativePath = Path.GetRelativePath(runServicesRoot, sourceFile);
+        foreach (Match match in matches)
+        {
+            string typeName = match.Groups["typeName"].Value;
+            violations.Add($"{relativePath}: source-owns {typeName}");
+        }
+    }
+
+    Assert(
+        violations.Count == 0,
+        $"run-services must consume metadata/publication DTOs from Chummer.Hub.Registry.Contracts. Violations: {string.Join("; ", violations)}");
+}
+
+static string? ResolveRunServicesRoot()
+{
+    string? fromEnv = Environment.GetEnvironmentVariable("CHUMMER_RUN_SERVICES_ROOT");
+    if (!string.IsNullOrWhiteSpace(fromEnv) && Directory.Exists(fromEnv))
+    {
+        return Path.GetFullPath(fromEnv);
+    }
+
+    return null;
+}
+
+static Regex BuildDeclarationRegex()
+{
+    string[] metadataPublicationTypeNames =
+    [
+        nameof(ArtifactPublicationPointer),
+        nameof(HubArtifactCreateRequest),
+        nameof(HubArtifactRecord),
+        nameof(HubArtifactMetadata),
+        nameof(HubArtifactStateChangeRequest),
+        nameof(HubArtifactStateResponse),
+        nameof(HubArtifactDeleteAttemptResponse),
+        nameof(HubPublicationOperations),
+        nameof(HubPublishDraftRequest),
+        nameof(HubUpdateDraftRequest),
+        nameof(HubDraftRecord),
+        nameof(HubSubmitProjectRequest),
+        nameof(HubProjectSubmissionReceipt),
+        nameof(HubModerationDecisionRequest),
+        nameof(HubModerationDecisionReceipt),
+        nameof(HubPublishDraftReceipt),
+        nameof(HubPublishDraftList),
+        nameof(HubDraftDetailProjection),
+        nameof(HubPublicationReceipt),
+        nameof(HubModerationQueueItem)
+    ];
+
+    string alternation = string.Join("|", metadataPublicationTypeNames.Select(Regex.Escape));
+    return new Regex(
+        $@"\b(?:record(?:\s+struct)?|class|struct|interface|enum)\s+(?<typeName>{alternation})\b",
+        RegexOptions.Compiled);
 }
