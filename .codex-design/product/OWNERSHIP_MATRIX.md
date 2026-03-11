@@ -56,3 +56,123 @@ Any of the following is an ownership violation:
 * ui-kit gains domain DTOs or HTTP clients
 * engine begins depending on presentation/play/service code
 * design repo becomes stale enough that code repos must invent architecture locally
+
+
+## External integration ownership notes
+
+### `chummer-design`
+
+Owns:
+
+* external-tool classification
+* approved usage policy
+* system-of-record rules
+* rollout and blocker publication
+
+Must not own:
+
+* provider SDK code
+* runtime secrets
+* adapter implementations
+
+### `chummer.run-services`
+
+Owns:
+
+* AI/provider routing
+* approval bridges
+* docs/help bridges
+* survey bridges
+* automation bridges
+* evaluation and prompt-toolchain integrations
+
+Must not own:
+
+* media rendering internals
+* client-side provider access
+* duplicate engine semantics
+
+### `chummer-media-factory`
+
+Owns:
+
+* document/image/video/preview/archive adapters
+* media provider receipts
+* media provider provenance
+* media asset lifecycle for provider-generated outputs
+
+Must not own:
+
+* approvals policy
+* campaign/session meaning
+* prompt registry canon
+* client UX
+
+### `chummer-presentation` and `chummer-play`
+
+Must not own:
+
+* vendor credentials
+* direct provider SDK integrations
+* direct third-party API orchestration
+
+## External integration ownership
+
+### `chummer-design`
+
+Owns:
+
+* external-tool classification
+* approved usage policy
+* system-of-record rules
+* rollout governance
+* provenance requirements
+
+Must not own:
+
+* provider SDK implementations
+* runtime secrets
+* vendor adapters
+
+### `chummer.run-services`
+
+Owns:
+
+* orchestration-side external integrations
+* reasoning-provider routing
+* approval bridges
+* docs/help bridges
+* survey bridges
+* automation bridges
+* research/eval/prompt-tooling integrations
+
+Must not own:
+
+* media rendering internals
+* client-side vendor access
+* duplicate engine semantics
+
+### `chummer-media-factory`
+
+Owns:
+
+* render/archive adapters
+* provider-run receipts for media work
+* media provenance capture
+* media archive execution
+
+Must not own:
+
+* approvals policy
+* campaign/session meaning
+* client UX
+* registry truth
+
+### `chummer-presentation` and `chummer-play`
+
+Must not own:
+
+* vendor credentials
+* direct provider SDK access
+* direct third-party orchestration
+
