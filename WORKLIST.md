@@ -7,3 +7,7 @@
 - [done] Add explicit milestone mapping for remaining `run-services` -> `hub-registry` ownership transfer of immutable artifact metadata and publication state
 - [done] Publish executable cutover queue entries for metadata/publication ownership transfer sequencing and verification
 - [done] Finish milestone coverage modeling for hub-registry so ETA and completion truth are no longer partial
+- [done] Add milestone mapping for install/review/compatibility/runtime-bundle-head seams that are not yet package-only registry boundaries
+- [done] Publish runnable backlog for install/review/compatibility/runtime-bundle-head package-boundary cutover and verify-gate expansion
+- [done] Add milestone mapping for moderation/publication projections that still need explicit registry-owned read models
+- [done] Publish runnable backlog for moderation/publication projection read-model ownership and verify-gate expansion
