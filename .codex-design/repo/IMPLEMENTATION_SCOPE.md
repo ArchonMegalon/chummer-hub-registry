@@ -44,3 +44,16 @@
 
 If the problem is about published artifacts, installs, compatibility, reviews, or moderation state, it belongs here.
 If it is about relay, play shells, or rendering, it does not.
+
+
+## External integration note
+
+`chummer-hub-registry` may reference reusable external-facing help, preview, template, and style artifacts only when they have been promoted into registry truth.
+
+It must not:
+
+* run provider adapters
+* own approval bridges
+* own docs/help vendor execution
+* own render execution
+

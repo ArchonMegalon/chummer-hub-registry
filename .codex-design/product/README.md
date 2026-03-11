@@ -8,11 +8,12 @@ Read in this order:
 
 1. `VISION.md`
 2. `ARCHITECTURE.md`
-3. `OWNERSHIP_MATRIX.md`
-4. `PROGRAM_MILESTONES.yaml`
-5. `CONTRACT_SETS.yaml`
-6. `GROUP_BLOCKERS.md`
-7. `projects/*.md` for repo-specific scope
+3. `EXTERNAL_TOOLS_PLANE.md`
+4. `OWNERSHIP_MATRIX.md`
+5. `PROGRAM_MILESTONES.yaml`
+6. `CONTRACT_SETS.yaml`
+7. `GROUP_BLOCKERS.md`
+8. `projects/*.md` for repo-specific scope
 
 ## Active Chummer repos
 
