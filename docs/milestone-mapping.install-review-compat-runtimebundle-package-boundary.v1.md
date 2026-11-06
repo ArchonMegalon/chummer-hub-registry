@@ -7,7 +7,7 @@ Scope: resolve uncovered scope where install, review, compatibility, and runtime
 
 Completed in this repo:
 
-- `Chummer.Hub.Registry.Contracts` defines DTO families for install records, compatibility projections, review projections, and runtime-bundle head metadata.
+- `Chummer.Hub.Registry.Contracts` defines install records, compatibility projections, and runtime-bundle head metadata. Reviews currently have counts/average score and state vocabulary only; dedicated review projections and discovery DTOs are still future work.
 - verify harness exists to validate contract packaging discipline.
 
 Still uncovered:

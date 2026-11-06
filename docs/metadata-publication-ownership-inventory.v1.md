@@ -1,4 +1,4 @@
-# Metadata/Publication Ownership Inventory
+# Metadata/Publication Ownership Inventory (Planning Draft)
 
 Date: 2026-03-11
 Program milestone: `C0` (Hub registry extraction)
@@ -6,11 +6,11 @@ Scope: immutable artifact metadata and publication state flows that are still im
 
 ## Notes
 
-- This inventory is based on the current queue scope and mirrored design context in this repo.
-- `chummer.run-services` source is not in this workspace, so implementation owners are captured as ownership buckets that map directly to contract flow families.
-- Goal of this inventory: make the remaining `run-services` implementation ownership explicit so cutover can move write/persistence/read-model authority to `chummer-hub-registry`.
+- This planning draft is based on queue scope and mirrored design context, not an audit of a pinned `chummer.run-services` revision.
+- The downstream source is not supplied in this packet. Rows below are assumed ownership buckets; they do not identify actual handler, persistence, or projection implementation paths.
+- Before accepting this as the cutover source list, record the exact downstream commit and concrete owner paths for every row. Inventory completion and runtime ownership remain unverified.
 
-## Remaining `run-services` implementation owners
+## Proposed `run-services` implementation-owner buckets (unverified)
 
 | Flow | Contract operations / DTOs | Remaining `run-services` implementation owner | Current write owner | Current persistence owner | Current read-model owner | Target post-cutover owner |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -24,6 +24,6 @@ Scope: immutable artifact metadata and publication state flows that are still im
 
 ## Cutover implications captured by this inventory
 
-- Every metadata/publication flow above currently has one remaining implementation owner: `chummer.run-services`.
+- The model assumes `chummer.run-services` currently implements these flows; source review must confirm each row and identify any additional flows.
 - The required cutover direction is the same for each flow: move write ownership, persistence authority, and read-model ownership into `chummer-hub-registry`.
 - After cutover, `run-services` remains a contract consumer (`Chummer.Hub.Registry.Contracts`) and orchestration adapter only.
