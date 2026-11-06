@@ -1,6 +1,6 @@
 # Downstream Consumer Mapping
 
-This repo cannot directly edit `chummer.run-services` or presentation from the current workspace, so the consumer wiring for this slice is captured here as the package boundary contract those repos must adopt.
+This repo does not edit `chummer.run-services` or presentation. This document specifies the migration they must adopt; it is not evidence that either consumer has already migrated.
 
 ## Package Boundary
 
@@ -11,7 +11,7 @@ This repo cannot directly edit `chummer.run-services` or presentation from the c
 
 ## `chummer.run-services`
 
-`chummer.run-services` consumes the package as the hosted-service boundary for registry flows.
+`chummer.run-services` is intended to consume the package as the hosted-service boundary for registry flows. Verify its exact PR head and restored references before claiming that boundary is active.
 
 Required changes downstream:
 
@@ -28,7 +28,7 @@ Must not remain downstream:
 
 ## Presentation
 
-Presentation consumes the package only for registry-facing request/response contracts and read models that cross the repo boundary.
+Presentation is intended to consume the package only for registry-facing request/response contracts and read models that cross the repo boundary.
 
 Required changes downstream:
 
@@ -46,4 +46,13 @@ Must not remain downstream:
 
 When a type belongs to the artifact catalog, publication workflow, moderation workflow, install history/projections, compatibility projections, or runtime-bundle heads, downstream repos consume `Chummer.Hub.Registry.Contracts`.
 
-When logic belongs to orchestration, transport, storage, or UX-specific shaping, downstream repos keep that logic local and map to or from the shared contracts at the boundary.
+Orchestration, transport, and UX-specific shaping stay local to their owning consumers. Registry storage and canonical publication state belong in the target registry service, not in the contract package. Existing storage in `run-services` is transitional until an evidenced service cutover.
+
+## Dependency order
+
+1. Verify this registry contract source and locally pack the exact ID/version required by consumers (default package version here is `1.0.0`, target `net10.0`). Make the verified package available through the agreed local dependency flow; a source merge alone does not publish it.
+2. Verify `chummer.run-services` PR1 against that package: remove the former `Chummer.Run.Registry` source seam, align namespaces and references, and build the affected consumers. Run this repo's full ownership gate with `CHUMMER_RUN_SERVICES_ROOT` pointing at that exact PR checkout. This packet does not contain that PR's source or package-reference version, so it cannot certify those changes.
+3. Verify presentation and the other March splits against their canonical packages (`Chummer.Engine.Contracts`, `Chummer.Play.Contracts`, `Chummer.Run.Contracts`, `Chummer.Ui.Kit`, `Chummer.Media.Contracts`) in their respective packets. They are not supplied or built here, and this registry package does not replace them.
+4. Treat metadata/publication handler, store, and read-model cutover as separate work after a registry service exists. Package-only DTO consumption is necessary but does not complete `C0`/`E2`.
+
+These are dependency/verification constraints; existing enforced merge and authority checks still apply. Build and package locally under the current operator policy. No hosted build, provider call, public publication, or deployment is required by this document.

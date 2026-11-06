@@ -4,9 +4,11 @@ Date: 2026-03-11
 Program milestone: `C0` (Hub registry extraction)
 Scope: move metadata/publication write ownership and persistence authority to `chummer-hub-registry` while keeping `chummer.run-services` as contract consumer only.
 
+This is a proposed service-cutover runbook. This repo currently contains contracts and verification only: the endpoints, handlers, stores, feature flags, and recovery behavior described below do not yet exist here. Passing the source-ownership gate does not prove that this runbook has been executed.
+
 ## Preconditions
 
-- `docs/metadata-publication-ownership-inventory.v1.md` is accepted as the source cut list.
+- `docs/metadata-publication-ownership-inventory.v1.md` is completed with a pinned downstream commit and exact handler/store/projection paths, then accepted as the source cut list.
 - Metadata/publication DTOs are consumed from `Chummer.Hub.Registry.Contracts`, not source-copied.
 - `run-services` has a feature-flag path for routing metadata/publication writes to registry endpoints.
 - Registry persistence schema/backing store for metadata and publication flows is ready.
@@ -70,8 +72,8 @@ Scope: move metadata/publication write ownership and persistence authority to `c
 - Metadata/publication persistence authority is registry-owned for all inventory flows.
 - Publication read-model ownership is registry-owned for the targeted projection DTOs.
 - `run-services` is contract consumer/adapter only for metadata/publication seams.
-- Verification gate coverage exists for regression detection (source-owned DTO reintroduction and ownership drift).
-- `scripts/ai/verify.sh` passes in this repo.
+- The DTO source-ownership gate passes against the pinned consumer checkout, and separate handler/store evidence establishes write/persistence/read-model authority.
+- `CHUMMER_RUN_SERVICES_ROOT=/absolute/path/to/the/pinned/consumer scripts/ai/verify.sh` passes. `--contracts-only` is insufficient for this criterion.
 
 ## Evidence to Capture During Execution
 
@@ -85,7 +87,7 @@ Scope: move metadata/publication write ownership and persistence authority to `c
 
 ## Appendix A: Registry-Owned Write Contract Mapping
 
-All command/request DTOs below are sourced from `Chummer.Hub.Registry.Contracts` and are owned by `chummer-hub-registry` for semantic write/persistence authority.
+The listed DTOs exist in `Chummer.Hub.Registry.Contracts`. The API/command labels and write/persistence owners below describe the target service mapping; the package itself does not implement handlers or grant persistence authority.
 
 | Flow | API / command | Contract DTO(s) | Semantic write owner | Persistence owner | `run-services` role after cutover |
 | --- | --- | --- | --- | --- | --- |
@@ -94,5 +96,5 @@ All command/request DTOs below are sourced from `Chummer.Hub.Registry.Contracts`
 | Artifact publication pointer updates | `LinkArtifactPublicationPointer` | `ArtifactPublicationPointer`, `HubArtifactMetadata` | `chummer-hub-registry` | `chummer-hub-registry` | Contract client + orchestration only |
 | Publication draft create/update/archive/delete | `create-draft`, `update-draft`, `archive-draft`, `delete-draft` | `HubPublishDraftRequest`, `HubUpdateDraftRequest`, `HubDraftRecord`, `HubPublicationOperations` | `chummer-hub-registry` | `chummer-hub-registry` | Contract client + orchestration only |
 | Publication submission transition | `submit-project` | `HubSubmitProjectRequest`, `HubProjectSubmissionReceipt`, `HubDraftRecord` | `chummer-hub-registry` | `chummer-hub-registry` | Contract client + orchestration only |
-| Publication moderation decision transition | `decide-moderation` | `HubModerationDecisionRequest`, `HubModerationDecisionReceipt`, `HubPublicationReceipt` | `chummer-hub-registry` | `chummer-hub-registry` | Contract client + orchestration only |
+| Publication moderation decision transition | `approve-moderation-case`, `reject-moderation-case` | `HubModerationDecisionRequest`, `HubModerationDecisionReceipt`, `HubPublicationReceipt` | `chummer-hub-registry` | `chummer-hub-registry` | Contract client + orchestration only |
 | Publication state projections | `ListDrafts`, `GetDraftDetail`, `GetPublicationReceipt` | `HubPublishDraftList`, `HubDraftDetailProjection`, `HubPublicationReceipt`, `HubPublishDraftReceipt` | `chummer-hub-registry` | `chummer-hub-registry` | Consumer/proxy only |

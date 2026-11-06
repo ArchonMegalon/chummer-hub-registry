@@ -2,6 +2,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chummer.Hub.Registry.Contracts\Chummer.Hub.Registry.Contracts.csproj" />
+    <!-- Verification only: use the compiler shipped with the SDK, without a NuGet dependency. -->
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>$(MSBuildToolsPath)/Roslyn/bincore/Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>$(MSBuildToolsPath)/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>
